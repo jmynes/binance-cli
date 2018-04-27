@@ -1,0 +1,24 @@
+{
+  "name": "NODE",
+  "version": "1.0.0",
+  "description": "* Install node packages * Define API keys as constants (I have them set in .bashrc, trying to get them set in .env for dotenv, as this is expected behavior):   * BINANCEPUB=apikeyhere   * BINANCESEC=secretkey",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmynes/binance-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmynes/binance-cli/issues"
+  },
+  "homepage": "https://github.com/jmynes/binance-cli#readme",
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "node-binance-api": "^0.4.29"
+  }
+}
