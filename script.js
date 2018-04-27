@@ -21,7 +21,7 @@ stdin.addListener("data", function(d) {
     case 'help':
     case 'list':
     case 'commands':
-      console.log("You can use the commands: balances, cancel, help, open, or quit");
+      console.log("You can use the commands: balances, cancel, help, open, price, or quit");
     break;
 
     /*
@@ -60,6 +60,15 @@ stdin.addListener("data", function(d) {
       });
     break;
 
+    /*
+      Get current price of asset (in our case, BNB priced in BTC)
+    */
+    case 'price':
+    case 'p':
+      binance.prices('BNBBTC', (error, ticker) => {
+        console.log("Price of BNB: ", ticker.BNBBTC);
+      });
+    break;
     /*
       Exit the program
     */
