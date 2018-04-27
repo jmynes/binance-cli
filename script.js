@@ -21,7 +21,7 @@ stdin.addListener("data", function(d) {
     case 'help':
     case 'list':
     case 'commands':
-      console.log("You can use the commands: open, balance, or quit")
+      console.log("You can use the commands: balances, cancel, help, open, or quit");
     break;
 
     /*
@@ -39,6 +39,17 @@ stdin.addListener("data", function(d) {
     break;
 
     /*
+      Second piece of ticker (USDT) is the trading pair
+      e.g. XMRBTC means BTC market, XMR
+    */
+    case 'cancel':
+    case 'c':
+      binance.cancelOrders("BTCUSDT", (error, response, symbol) => {
+        console.log(symbol+" cancel response:", response);
+      });
+    break;
+
+    /*
       List all open orders
     */
     case 'open':
@@ -46,16 +57,6 @@ stdin.addListener("data", function(d) {
     case 'o':
       binance.openOrders(false, (error, openOrders) => {
         console.log("openOrders()", openOrders);
-      });
-    break;
-
-    /*
-      Second piece of ticker (USDT) is the trading pair
-      e.g. XMRBTC means BTC market, XMR
-    */
-    case 'cancel':
-      binance.cancelOrders("BTCUSDT", (error, response, symbol) => {
-        console.log(symbol+" cancel response:", response);
       });
     break;
 
