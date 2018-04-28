@@ -51,11 +51,23 @@ function cancel() {
 /*
   List all open orders
 */
-function open_orders() {
-  binance.openOrders(false, (error, openOrders) => {
-    console.log("openOrders()", openOrders);
+async function open_orders() {
+  // binance.openOrders(false, (error, openOrders) => {
+  //   console.log("Here are your open orders:\n\n", openOrders);
+  //   console.log("");
+  // });
+
+  const openOrders = util.promisify(binance.openOrders);
+
+  try {
+    //const payload = await openOrders(false);
+    console.log("Here are your open orders:\n\n", openOrders);
     console.log("");
-  });
+  } catch (err) {
+    console.error("error: " + JSON.parse(err.body).msg);
+    console.log("");
+    return;
+  }
 }
 
 /*
@@ -117,7 +129,7 @@ async function run() {
       case 'open':
       case 'orders':
       case 'o':
-        open_orders();
+        await open_orders();
       break;
 
       case 'price':
