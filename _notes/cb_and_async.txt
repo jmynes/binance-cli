@@ -19,14 +19,13 @@ function run(cb) {
 }
 
 
-
-
-
-
-
+/*
+* -----------------------------------------------
+*/
 
 
 // async way
+// Anything that these call will now need to be async as well.
 
 async function bar() {
   await file.write(); // fs-promise
