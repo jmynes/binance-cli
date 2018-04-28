@@ -41,7 +41,7 @@ function balance() {
   Second piece of ticker (USDT) is the trading pair
   e.g. XMRBTC means BTC market, XMR
 */
-async function cancel_orders() {
+async function cancel_orders(req) {
   // binance.cancelOrders("BTCUSDT", (error, response, symbol) => {
   //   console.log(symbol+" cancel response:", response);
   //   console.log("");
@@ -50,7 +50,7 @@ async function cancel_orders() {
   const cancelOrders = util.promisify(binance.cancelOrders);
 
   try {
-      const orders = await cancelOrders("BTCUSDT");
+      const orders = await cancelOrders(req);
       console.log("Here are your cancelled orders:\n\n", orders);
       console.log("");
   } catch(err) {
@@ -58,6 +58,14 @@ async function cancel_orders() {
       console.log("");
       return;
   }
+}
+
+// Prompt for ticker to cancel orders for
+async function cancel_prompt() {
+  const answer = await rl.questionAsync('Cancel orders for which ticker? Put the pairing second (e.g. BNBBTC): ');
+  console.log("");
+  //console.log('TICKER = ',answer +"\n");
+  await cancel_orders(answer);
 }
 
 /*
@@ -107,8 +115,9 @@ async function price(req) {
   }
 }
 
-async function priceGet() {
-  const answer = await rl.questionAsync('Which ticker? Put the pairing second (e.g. BNBBTC): ');
+// Prompt for ticker to check price for
+async function price_prompt() {
+  const answer = await rl.questionAsync('View prices for which ticker? Put the pairing second (e.g. BNBBTC): ');
   console.log("");
   //console.log('TICKER = ',answer +"\n");
   await price(answer);
@@ -139,7 +148,7 @@ async function run() {
 
       case 'cancel':
       case 'c':
-        await cancel_orders();
+        await cancel_prompt();
       break;
 
       case 'open':
@@ -150,7 +159,7 @@ async function run() {
 
       case 'price':
       case 'p':
-        await priceGet();
+        await price_prompt();
         //price("BNBBTC");
         //price("WTCBTC");
       break;
