@@ -83,26 +83,26 @@ async function open_orders() {
       // console.log("Here are your open orders:\n\n", orders);
       // console.log("");
 
-      console.log("Open orders:\n-------------------\n");
+      console.log("Open orders:\n=========================\n");
       orders.forEach(order => {
         var dateFormat = require('dateformat');
 
-        console.log("Ticker: " + order.symbol)
+        console.log("Ticker: " + order.symbol);
         console.log("Date placed: " + dateFormat(order.time, "yyyy-mm-dd h:MM:ss"));
-        console.log("Buy/Sell?: " + order.side)
-        console.log("Type: " + order.type)
+        console.log("Buy/Sell?: " + order.side);
+        console.log("Type: " + order.type);
         console.log("");
-        console.log("Original Qty: " + order.origQty)
-        console.log("Executed Qty: " + order.origQty)
+        console.log("Original Qty: " + order.origQty);
+        console.log("Executed Qty: " + order.origQty);
 
         console.log("");
         if (order.type == "TAKE_PROFIT_LIMIT") {
-          console.log("----------\nSTOP LIMIT\n----------");
-          console.log("Stop price: " + order.stopPrice)
+          console.log("=-=-=-=-=-=\nSTOP LIMIT\n=-=-=-=-=-=");
+          console.log("Stop price: " + order.stopPrice);
         }
-        console.log("Limit price: " + order.price)
+        console.log("Limit price: " + order.price);
         console.log("");
-        console.log("-------------------");
+        console.log("=========================");
         console.log("");
       });
 
