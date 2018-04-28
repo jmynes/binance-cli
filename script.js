@@ -49,7 +49,11 @@ function cancel() {
 }
 
 /*
-  List all open orders
+  List all open orders:
+  const orders = await openOrders("");
+
+  For specific ticker:
+  const orders = await openOrders(BTCUSDT);
 */
 async function open_orders() {
   // binance.openOrders(false, (error, openOrders) => {
@@ -57,17 +61,17 @@ async function open_orders() {
   //   console.log("");
   // });
 
-  const openOrders = util.promisify(binance.openOrders);
+   const openOrders = util.promisify(binance.openOrders);
 
-  try {
-    //const payload = await openOrders(false);
-    console.log("Here are your open orders:\n\n", openOrders);
-    console.log("");
-  } catch (err) {
-    console.error("error: " + JSON.parse(err.body).msg);
-    console.log("");
-    return;
-  }
+   try {
+       const orders = await openOrders("");
+       console.log("Here are your open orders:\n\n", orders);
+       console.log("");
+   } catch(err) {
+       console.error("error: " + JSON.parse(err.body).msg);
+       console.log("");
+       return;
+   }
 }
 
 /*
