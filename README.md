@@ -4,6 +4,9 @@
   * BINANCEPUB=apikeyhere
   * BINANCESEC=secretkey
 
+# Contributors
+* Thank you [@jaxrtech](https://github.com/jaxrtech) for the lion's share of commit 03ea286e59
+
 # Resources
 * https://stackoverflow.com/questions/8128578/reading-value-from-console-interactively
 * https://stackoverflow.com/questions/19739755/nodejs-callbacks-simple-example
