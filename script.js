@@ -41,11 +41,23 @@ function balance() {
   Second piece of ticker (USDT) is the trading pair
   e.g. XMRBTC means BTC market, XMR
 */
-function cancel() {
-  binance.cancelOrders("BTCUSDT", (error, response, symbol) => {
-    console.log(symbol+" cancel response:", response);
-    console.log("");
-  });
+async function cancel_orders() {
+  // binance.cancelOrders("BTCUSDT", (error, response, symbol) => {
+  //   console.log(symbol+" cancel response:", response);
+  //   console.log("");
+  // });
+
+  const cancelOrders = util.promisify(binance.cancelOrders);
+
+  try {
+      const orders = await cancelOrders("BTCUSDT");
+      console.log("Here are your cancelled orders:\n\n", orders);
+      console.log("");
+  } catch(err) {
+      console.error("error: " + JSON.parse(err.body).msg);
+      console.log("");
+      return;
+  }
 }
 
 /*
@@ -127,7 +139,7 @@ async function run() {
 
       case 'cancel':
       case 'c':
-        cancel();
+        await cancel_orders();
       break;
 
       case 'open':
