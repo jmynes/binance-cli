@@ -97,6 +97,7 @@ async function open_orders() {
 
         console.log("");
         if (order.type == "TAKE_PROFIT_LIMIT") {
+          console.log("----------\nSTOP LIMIT\n----------");
           console.log("Stop price: " + order.stopPrice)
         }
         console.log("Limit price: " + order.price)
