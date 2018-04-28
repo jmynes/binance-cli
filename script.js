@@ -31,6 +31,7 @@ function help() {
 function balance() {
   binance.balance((error, balances) => {
     console.log("balances()", balances);
+    console.log("");
     console.log("USDT balance: ", balances.USDT.available);
     console.log("BTC balance: ", balances.BTC.available);
     console.log("");
@@ -58,14 +59,6 @@ async function cancel_orders(req) {
       console.log("");
       return;
   }
-}
-
-// Prompt for ticker to cancel orders for
-async function cancel_prompt() {
-  const answer = await rl.questionAsync('Cancel orders for which ticker? Put the pairing second (e.g. BNBBTC): ');
-  console.log("");
-  //console.log('TICKER = ',answer +"\n");
-  await cancel_orders(answer);
 }
 
 /*
@@ -115,12 +108,38 @@ async function price(req) {
   }
 }
 
-// Prompt for ticker to check price for
-async function price_prompt() {
-  const answer = await rl.questionAsync('View prices for which ticker? Put the pairing second (e.g. BNBBTC): ');
-  console.log("");
-  //console.log('TICKER = ',answer +"\n");
-  await price(answer);
+// // Prompt for ticker to check price for
+// async function price_prompt() {
+//   const answer = await rl.questionAsync('View prices for which ticker? Put the pairing second (e.g. BNBBTC): ');
+//   console.log("");
+//   //console.log('TICKER = ',answer +"\n");
+//   await price(answer);
+// }
+
+/*
+  Replaces above commented code, used to have a separate function for each prompt.
+  This still isn't very DRY, but it's all in one place instead of several functions
+  paired with their partner functions across the codebase.
+*/
+async function prompt(cmd) {
+  switch(cmd) {
+    // Prompt for ticker to cancel orders for
+    case 'cancel':
+      const cancel_answer = await rl.questionAsync('View prices for which ticker? Put the pairing second (e.g. BNBBTC): ');
+      console.log("");
+      await cancel_orders(cancel_answer);
+    break;
+
+    // Prompt for ticker to check prices for
+    case 'price':
+      const price_answer = await rl.questionAsync('Cancel orders for which ticker? Put the pairing second (e.g. BNBBTC): ');
+      console.log("");
+      await price(price_answer);
+    break;
+    default:
+      //
+    break;
+  }
 }
 
 async function run() {
@@ -148,7 +167,7 @@ async function run() {
 
       case 'cancel':
       case 'c':
-        await cancel_prompt();
+        await prompt('cancel');
       break;
 
       case 'open':
@@ -159,7 +178,7 @@ async function run() {
 
       case 'price':
       case 'p':
-        await price_prompt();
+        await prompt('price');
         //price("BNBBTC");
         //price("WTCBTC");
       break;
