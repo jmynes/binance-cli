@@ -33,6 +33,7 @@ function balance() {
     console.log("balances()", balances);
     console.log("USDT balance: ", balances.USDT.available);
     console.log("BTC balance: ", balances.BTC.available);
+    console.log("");
   });
 }
 
@@ -43,6 +44,7 @@ function balance() {
 function cancel() {
   binance.cancelOrders("BTCUSDT", (error, response, symbol) => {
     console.log(symbol+" cancel response:", response);
+    console.log("");
   });
 }
 
@@ -52,6 +54,7 @@ function cancel() {
 function open_orders() {
   binance.openOrders(false, (error, openOrders) => {
     console.log("openOrders()", openOrders);
+    console.log("");
   });
 }
 
@@ -68,25 +71,29 @@ async function price(req) {
   try {
     const ticker = await prices(req);
     console.log("Price of "+req+":", ticker[req]);
+    console.log("");
   } catch (err) {
     console.error("error: " + JSON.parse(err.body).msg);
+    console.log("");
     return;
   }
 }
 
 async function priceGet() {
-  console.log("\nGetting price...\n");
-
   const answer = await rl.questionAsync('Which ticker? Put the pairing second (e.g. BNBBTC): ');
+  console.log("");
   //console.log('TICKER = ',answer +"\n");
   await price(answer);
 }
 
 async function run() {
-  console.log("Issue a command");
+  console.log("-------------Welcome-------------");
+  console.log("");
+  console.log("Issue a command (you can type help if you're unsure):")
 
   while (true) {
     const d = await rl.questionAsync('> ');
+    console.log("");
     switch(d.toString().trim()) {
       case 'help':
       case 'list':
