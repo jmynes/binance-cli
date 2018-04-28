@@ -47,11 +47,11 @@ function open_orders() {
 }
 
 /*
-  Get current price of asset (in our case, BNB priced in BTC)
+  Get current price of requested ticker pairing
 */
-function price() {
-  binance.prices('BNBBTC', (error, ticker) => {
-    console.log("Price of BNB: ", ticker.BNBBTC);
+function price(req) {
+  binance.prices(req, (error, ticker) => {
+    console.log("Price of "+req+":", ticker[req]);
   });
 }
 
@@ -88,7 +88,8 @@ stdin.addListener("data", function(d) {
 
     case 'price':
     case 'p':
-      price();
+      price("BNBBTC");
+      price("WTCBTC");
     break;
 
     /*
