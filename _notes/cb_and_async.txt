@@ -1,0 +1,43 @@
+// callback way
+
+function bar(cb) {
+  file.write(cb);
+}
+
+function foo(n, cb) {
+  bar(function () {
+    // do stuff
+    cb(n * 2)
+  }
+}
+
+function run(cb) {
+  foo(function (data) {
+    // do something with the data
+    console.log(data) //n * 2
+  })
+}
+
+
+
+
+
+
+
+
+
+// async way
+
+async function bar() {
+  await file.write(); // fs-promise
+}
+
+async function foo(n) {
+  await bar();
+  return n * 2;
+}
+
+async function run(cb) {
+  const answer = await foo();
+  console.log(answer)
+}

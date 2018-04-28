@@ -1,5 +1,14 @@
-require('dotenv').config()
+require('dotenv').config();
+const util = require('util');
 const binance = require('node-binance-api');
+const readline = require('readline-promise');
+
+const rl = new readline.default.Interface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: true
+});
+
 binance.options({
   APIKEY: process.env.BINANCEPUB,
   APISECRET: process.env.BINANCESEC,
@@ -49,63 +58,86 @@ function open_orders() {
 /*
   Get current price of requested ticker pairing
 */
-function price(req) {
-  binance.prices(req, (error, ticker) => {
+async function price(req) {
+  // binance.prices(req, (error, ticker) => {
+  //   console.log("Price of "+req+":", ticker[req]);
+  //  ticker = await prices(req);
+
+  const prices = util.promisify(binance.prices);
+
+  try {
+    const ticker = await prices(req);
     console.log("Price of "+req+":", ticker[req]);
-  });
+  } catch (err) {
+    console.error("error: " + JSON.parse(err.body).msg);
+    return;
+  }
 }
 
-console.log("Issue a command");
+async function priceGet() {
+  console.log("\nGetting price...\n");
 
-var stdin = process.openStdin();
+  const answer = await rl.questionAsync('Which ticker? Put the pairing second (e.g. BNBBTC): ');
+  //console.log('TICKER = ',answer +"\n");
+  await price(answer);
+}
 
-stdin.addListener("data", function(d) {
-  switch(d.toString().trim()) {
-    case 'help':
-    case 'list':
-    case 'commands':
-    case '?':
-    case 'h':
-      help();
-    break;
+async function run() {
+  console.log("Issue a command");
 
-    case 'balance':
-    case 'balances':
-    case 'b':
-      balance();
-    break;
+  while (true) {
+    const d = await rl.questionAsync('> ');
+    switch(d.toString().trim()) {
+      case 'help':
+      case 'list':
+      case 'commands':
+      case '?':
+      case 'h':
+        help();
+      break;
 
-    case 'cancel':
-    case 'c':
-      cancel();
-    break;
+      case 'balance':
+      case 'balances':
+      case 'b':
+        balance();
+      break;
 
-    case 'open':
-    case 'orders':
-    case 'o':
-      open_orders();
-    break;
+      case 'cancel':
+      case 'c':
+        cancel();
+      break;
 
-    case 'price':
-    case 'p':
-      price("BNBBTC");
-      price("WTCBTC");
-    break;
+      case 'open':
+      case 'orders':
+      case 'o':
+        open_orders();
+      break;
 
-    /*
-      Exit the program
-    */
-    case 'quit':
-    case 'q':
-    case 'exit':
-      process.exit(0)
-    break;
+      case 'price':
+      case 'p':
+        await priceGet();
+        //price("BNBBTC");
+        //price("WTCBTC");
+      break;
 
-    /*
-      Inform the user of an error
-    */
-    default:
-      console.log("Command does not exist or failed. Please type help for a list of commands.")
-    break;
+      /*
+        Exit the program
+      */
+      case 'quit':
+      case 'q':
+      case 'exit':
+        process.exit(0)
+      break;
+
+      /*
+        Inform the user of an error
+      */
+      default:
+        console.log("Command does not exist or failed. Please type help for a list of commands.")
+      break;
+    }
   }
-});
+}
+
+// Run the program
+run();
