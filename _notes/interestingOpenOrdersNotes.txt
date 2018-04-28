@@ -1,0 +1,14 @@
+Consider using the more official repo: https://github.com/binance-exchange/binance-api-node
+
+With the jaggedsoft one, here's why it requires the symbol:
+
+        openOrders: function(symbol, callback) {
+            let parameters = symbol ? {symbol:symbol} : {};
+            signedRequest(base+'v3/openOrders', parameters, function(error, data) {
+                return callback.call(this, error, data, symbol);
+            });
+        },
+
+util.promisify(. . .) just converts the callback into a Promise.
+
+But that means it still requires the parameter.

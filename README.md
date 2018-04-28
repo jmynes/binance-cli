@@ -6,6 +6,7 @@
 
 # Contributors
 * Thank you [@jaxrtech](https://github.com/jaxrtech) for the lion's share of commit 03ea286e59
+* Thank you [@HeikaHaku](https://github.com/HeikaHaku) for the lion's share of commit 9c352f7fa
 
 # Resources
 * https://stackoverflow.com/questions/8128578/reading-value-from-console-interactively
