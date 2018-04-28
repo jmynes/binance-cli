@@ -80,15 +80,15 @@ async function open_orders() {
       const orders = await openOrders("");
 
       // Verbose, print all info
-
-      /*
-      console.log("Here are your open orders:\n\n", orders);
-      console.log("");
-      */
+      // console.log("Here are your open orders:\n\n", orders);
+      // console.log("");
 
       console.log("Open orders:\n-------------------\n");
       orders.forEach(order => {
+        var dateFormat = require('dateformat');
+
         console.log("Ticker: " + order.symbol)
+        console.log("Date placed: " + dateFormat(order.time, "yyyy-mm-dd h:MM:ss"));
         console.log("Buy/Sell?: " + order.side)
         console.log("Type: " + order.type)
         console.log("");

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/jmynes/binance-cli#readme",
   "dependencies": {
+    "dateformat": "^3.0.3",
     "dotenv": "^5.0.1",
     "node-binance-api": "^0.4.29",
     "readline-promise": "^1.0.3"
