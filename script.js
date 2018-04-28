@@ -77,12 +77,36 @@ async function open_orders() {
    const openOrders = util.promisify(binance.openOrders);
 
    try {
-       const orders = await openOrders("");
-       console.log("Here are your open orders:\n\n", orders);
-       console.log("");
+      const orders = await openOrders("");
+
+      // Verbose, print all info
+
+      /*
+      console.log("Here are your open orders:\n\n", orders);
+      console.log("");
+      */
+
+      console.log("Open orders:\n-------------------\n");
+      orders.forEach(order => {
+        console.log("Ticker: " + order.symbol)
+        console.log("Buy/Sell?: " + order.side)
+        console.log("Type: " + order.type)
+        console.log("");
+        console.log("Original Qty: " + order.origQty)
+        console.log("Executed Qty: " + order.origQty)
+
+        console.log("");
+        if (order.type == "TAKE_PROFIT_LIMIT") {
+          console.log("Stop price: " + order.stopPrice)
+        }
+        console.log("Limit price: " + order.price)
+        console.log("");
+        console.log("-------------------");
+        console.log("");
+      });
+
    } catch(err) {
        console.error("error: " + JSON.parse(err.body).msg);
-       console.log("");
        return;
    }
 }
