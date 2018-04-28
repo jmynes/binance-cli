@@ -1,3 +1,5 @@
+Consider using the more official repo: https://github.com/binance-exchange/binance-api-node
+
 With the jaggedsoft one, here's why it requires the symbol:
 
         openOrders: function(symbol, callback) {
